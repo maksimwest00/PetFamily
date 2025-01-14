@@ -1,4 +1,4 @@
-﻿namespace PetFamily.Domain
+﻿namespace PetFamily.Domain.Entities
 {
     public enum EStatusHelp
     {
