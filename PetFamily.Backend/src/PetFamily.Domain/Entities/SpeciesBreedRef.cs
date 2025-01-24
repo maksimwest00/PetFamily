@@ -2,7 +2,7 @@
 
 namespace PetFamily.Domain.Entities
 {
-    public class SpeciesBreedRef : ValueObject<SpeciesBreedRef>
+    public record SpeciesBreedRef
     {
         public Guid SpeciesId { get; }
         public Guid BreedId { get; }
@@ -18,18 +18,7 @@ namespace PetFamily.Domain.Entities
             SpeciesId = speciesId;
             BreedId = breedId;
         }
-
-        protected override bool EqualsCore(SpeciesBreedRef other)
-        {
-            return other.SpeciesId == SpeciesId && other.BreedId == BreedId;
-        }
-
-        protected override int GetHashCodeCore()
-        {
-            return GetHashCode();
-        }
-
-        public static Result<ValueObject<SpeciesBreedRef>> Create(Guid speciesId,
+        public static Result<SpeciesBreedRef> Create(Guid speciesId,
                                                                   Guid breedId)
         {
             // Какая-либо валидация GuId
@@ -37,7 +26,7 @@ namespace PetFamily.Domain.Entities
 
             var spbreddRef = new SpeciesBreedRef(speciesId, breedId);
 
-            return Result.Success<ValueObject<SpeciesBreedRef>>(spbreddRef);
+            return Result.Success<SpeciesBreedRef>(spbreddRef);
         }
     }
 }

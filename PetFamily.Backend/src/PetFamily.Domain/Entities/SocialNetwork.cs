@@ -2,7 +2,7 @@
 
 namespace PetFamily.Domain.Entities
 {
-    public class SocialNetwork
+    public record class SocialNetwork
     {
         // ef core
         private SocialNetwork()

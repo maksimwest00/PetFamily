@@ -2,29 +2,32 @@
 
 namespace PetFamily.Domain.Entities
 {
-    public class Volunteer : Entity
+    public class Volunteer : Shared.Entity<VolunteerId>
     {
         private readonly List<SocialNetwork> _socialNetworks = [];
         private readonly List<Pet> _pets = [];
 
         // ef core
-        private Volunteer()
+        private Volunteer(VolunteerId id) : base(id)
         {
 
         }
 
-        private Volunteer(string fullName,
+        private Volunteer(VolunteerId volunteerId,
+                          string fullName,
                           string email,
                           string description,
                           string phoneNumber)
+            : base(volunteerId)
         {
+            Id = volunteerId;
             FullName = fullName;
             Email = email;
             Description = description;
             PhoneNumber = phoneNumber;
         }
 
-        public Guid Id { get; private set; }
+        public VolunteerId Id { get; private set; }
 
         public string FullName { get; set; } = default!;
 
@@ -58,7 +61,7 @@ namespace PetFamily.Domain.Entities
             _socialNetworks.Add(socialNetwork);
         }
 
-        public ValueObject<BankDetalis> BankDetalis { get; private set; } = default!;
+        public BankDetalis BankDetalis { get; private set; } = default!;
 
         public IReadOnlyList<Pet> Pets => _pets;
 
@@ -68,7 +71,8 @@ namespace PetFamily.Domain.Entities
             return Result.Success(pet);
         }
 
-        public static Result<Volunteer> Create(string fullName,
+        public static Result<Volunteer> Create(VolunteerId volunteerId,
+                                               string fullName,
                                                string email,
                                                string description,
                                                string phoneNumber)
@@ -85,7 +89,7 @@ namespace PetFamily.Domain.Entities
             if (string.IsNullOrWhiteSpace(phoneNumber))
                 return Result.Failure<Volunteer>("PhoneNumber cannot be empty");
 
-            var volunter = new Volunteer(fullName, email, description, phoneNumber);
+            var volunter = new Volunteer(volunteerId, fullName, email, description, phoneNumber);
 
             return Result.Success(volunter);
         }

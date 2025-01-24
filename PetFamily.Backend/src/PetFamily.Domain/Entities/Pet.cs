@@ -3,19 +3,22 @@ using PetFamily.Domain.Species;
 
 namespace PetFamily.Domain.Entities
 {
-    public class Pet : Entity
+    public class Pet : Shared.Entity<PetId>
     {
         // ef core
-        private Pet()
+        private Pet(PetId petId) : base(petId)
         {
 
         }
-        private Pet(string nickName,
+        private Pet(PetId petId,
+                    string nickName,
                     string description,
                     string color,
                     string infoAboutHealthPet,
                     string addressLocatePet)
+            : base(petId)
         {
+            Id = petId;
             Nickname = nickName;
             Description = description;
             Color = color;
@@ -28,7 +31,7 @@ namespace PetFamily.Domain.Entities
             SpeciesBreedIds = speciesBreedIdsResult.Value;
         }
 
-        public Guid Id { get; private set; }
+        public PetId Id { get; private set; }
 
         public string Nickname { get; private set; }
 
@@ -58,13 +61,14 @@ namespace PetFamily.Domain.Entities
 
         public EStatusHelp StatusHelp { get; private set; }
 
-        public ValueObject<BankDetalis> BankingData { get; private set; }
+        public BankDetalis BankingData { get; private set; }
 
         public DateTime DateCreate { get; private set; }
 
-        public ValueObject<SpeciesBreedRef> SpeciesBreedIds { get; private set; }
+        public SpeciesBreedRef SpeciesBreedIds { get; private set; }
 
-        public static Result<Pet> Create(string nickName,
+        public static Result<Pet> Create(PetId petId,
+                                         string nickName,
                                          string description,
                                          string color,
                                          string infoAboutHealthPet,
@@ -73,7 +77,7 @@ namespace PetFamily.Domain.Entities
             if (string.IsNullOrWhiteSpace(nickName))
                 return Result.Failure<Pet>("Nickname cannot be empty");
 
-            var pet = new Pet(nickName, description, color, infoAboutHealthPet, AddressLocatePet);
+            var pet = new Pet(petId, nickName, description, color, infoAboutHealthPet, AddressLocatePet);
             return Result.Success(pet);
         }
     }

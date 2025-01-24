@@ -2,22 +2,33 @@
 
 namespace PetFamily.Domain.Entities
 {
-    public class BankDetalis : ValueObject<BankDetalis>
+    public record BankDetalis
     {
+        private BankDetalis(string name,
+                            string description,
+                            object howDoTransfer)
+        {
+            Name = name;
+            Description = description;
+            HowDoTransfer = howDoTransfer;
+        }
+
         public string Name { get; } = default!;
         
         public string Description { get; } = default!;
         
         public object HowDoTransfer { get; } = default!;
 
-        protected override bool EqualsCore(BankDetalis other)
+        public static Result<BankDetalis> Create(string name,
+                                                 string description,
+                                                 object howDoTransfer)
         {
-            return Name == other.Name && Description == other.Description;
-        }
+            // Какая-либо валидация name, description, howDoTransfer
+            // н-р в случае не успеха Result.Failure("error")
 
-        protected override int GetHashCodeCore()
-        {
-            return GetHashCode();
+            var bankDetalis = new BankDetalis(name, description, howDoTransfer);
+
+            return Result.Success<BankDetalis>(bankDetalis);
         }
     }
 }
