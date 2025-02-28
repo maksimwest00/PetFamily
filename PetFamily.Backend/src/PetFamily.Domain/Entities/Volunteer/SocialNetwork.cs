@@ -1,4 +1,4 @@
-﻿using CSharpFunctionalExtensions;
+﻿using PetFamily.Domain.Shared;
 
 namespace PetFamily.Domain.Entities
 {
@@ -23,12 +23,12 @@ namespace PetFamily.Domain.Entities
         public static Result<SocialNetwork> Create(string link, string name)
         {
             if (string.IsNullOrWhiteSpace(link))
-                return Result.Failure<SocialNetwork>("link cannot be empty");
+                return ("link cannot be empty");
             if (string.IsNullOrWhiteSpace(name))
-                return Result.Failure<SocialNetwork>("name cannot be empty");
+                return ("name cannot be empty");
 
             var socialNetwork = new SocialNetwork(link, name);
-            return Result.Success(socialNetwork);
+            return (socialNetwork);
         }
     }
 }

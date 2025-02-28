@@ -1,11 +1,12 @@
-﻿using CSharpFunctionalExtensions;
+﻿using PetFamily.Domain.Shared;
 
 namespace PetFamily.Domain.Entities
 {
-    public class Volunteer : Shared.Entity<VolunteerId>
+    public sealed class Volunteer : Shared.Entity<VolunteerId>
     {
-        private readonly List<SocialNetwork> _socialNetworks = [];
+        
         private readonly List<Pet> _pets = [];
+
 
         // ef core
         private Volunteer(VolunteerId id) : base(id)
@@ -13,21 +14,17 @@ namespace PetFamily.Domain.Entities
 
         }
 
-        private Volunteer(VolunteerId volunteerId,
+        private Volunteer(VolunteerId id,
                           string fullName,
                           string email,
                           string description,
-                          string phoneNumber)
-            : base(volunteerId)
+                          string phoneNumber) : base(id)
         {
-            Id = volunteerId;
             FullName = fullName;
             Email = email;
             Description = description;
             PhoneNumber = phoneNumber;
         }
-
-        public VolunteerId Id { get; private set; }
 
         public string FullName { get; set; } = default!;
 
@@ -54,44 +51,36 @@ namespace PetFamily.Domain.Entities
 
         public string PhoneNumber { get; set; } = default!;
 
-        public IReadOnlyList<SocialNetwork> SocialNetworks => _socialNetworks;
+        public VolunteerDetalis? VolunteerDetalis { get; private set; }
 
         public void AddSocialNetwork(SocialNetwork socialNetwork)
         {
-            _socialNetworks.Add(socialNetwork);
+            VolunteerDetalis.AddSocialNetwork(socialNetwork);
         }
-
-        public BankDetalis BankDetalis { get; private set; } = default!;
 
         public IReadOnlyList<Pet> Pets => _pets;
 
-        public Result<Pet> AddPet(Pet pet)
-        {
-            _pets.Add(pet);
-            return Result.Success(pet);
-        }
-
-        public static Result<Volunteer> Create(VolunteerId volunteerId,
+        public static Result<Volunteer> Create(VolunteerId id,
                                                string fullName,
                                                string email,
                                                string description,
                                                string phoneNumber)
         {
             if (string.IsNullOrWhiteSpace(fullName))
-                return Result.Failure<Volunteer>("FullName cannot be empty");
+                return ("FullName cannot be empty");
 
             if (string.IsNullOrWhiteSpace(email))
-                return Result.Failure<Volunteer>("Email cannot be empty");
+                return ("Email cannot be empty");
 
             if (string.IsNullOrWhiteSpace(description))
-                return Result.Failure<Volunteer>("Description cannot be empty");
+                return ("Description cannot be empty");
 
             if (string.IsNullOrWhiteSpace(phoneNumber))
-                return Result.Failure<Volunteer>("PhoneNumber cannot be empty");
+                return ("PhoneNumber cannot be empty");
 
-            var volunter = new Volunteer(volunteerId, fullName, email, description, phoneNumber);
+            var volunter = new Volunteer(id, fullName, email, description, phoneNumber);
 
-            return Result.Success(volunter);
+            return (volunter);
         }
     }
 }

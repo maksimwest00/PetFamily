@@ -6,14 +6,5 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Новая папка\**" />
-    <EmbeddedResource Remove="Новая папка\**" />
-    <None Remove="Новая папка\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="CSharpFunctionalExtensions" Version="3.4.3" />
-  </ItemGroup>
 
 </Project>
