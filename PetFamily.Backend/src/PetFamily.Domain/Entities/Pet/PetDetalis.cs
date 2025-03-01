@@ -1,6 +1,8 @@
-﻿namespace PetFamily.Domain.Entities
+﻿using CSharpFunctionalExtensions;
+
+namespace PetFamily.Domain.Entities
 {
-    public record PetDetalis
+    public class PetDetalis : ComparableValueObject
     {
         private readonly List<BankDetalis> _bankDetalis = [];
 
@@ -9,6 +11,14 @@
         public void AddBankDetalis(BankDetalis bankDetalis)
         {
             _bankDetalis.Add(bankDetalis);
+        }
+
+        protected override IEnumerable<IComparable> GetComparableEqualityComponents()
+        {
+            foreach (var bankDetalis in _bankDetalis)
+            {
+                yield return bankDetalis;
+            }
         }
     }
 }

@@ -12,18 +12,6 @@ namespace PetFamily.Infrastructure.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "breeds",
-                columns: table => new
-                {
-                    id = table.Column<Guid>(type: "uuid", nullable: false),
-                    name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("pk_breeds", x => x.id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "species",
                 columns: table => new
                 {
@@ -53,14 +41,30 @@ namespace PetFamily.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "breeds",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    breed_id = table.Column<Guid>(type: "uuid", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_breeds", x => x.id);
+                    table.ForeignKey(
+                        name: "fk_breeds_species_breed_id",
+                        column: x => x.breed_id,
+                        principalTable: "species",
+                        principalColumn: "id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "pets",
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     nickname = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    pet_species_id = table.Column<Guid>(type: "uuid", nullable: true),
                     description = table.Column<string>(type: "character varying(2000)", maxLength: 2000, nullable: false),
-                    pet_breed_id = table.Column<Guid>(type: "uuid", nullable: true),
                     color = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     info_about_health_pet = table.Column<string>(type: "character varying(2000)", maxLength: 2000, nullable: false),
                     address_locate_pet = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
@@ -81,16 +85,6 @@ namespace PetFamily.Infrastructure.Migrations
                 {
                     table.PrimaryKey("pk_pets", x => x.id);
                     table.ForeignKey(
-                        name: "fk_pets_breeds_breed_id",
-                        column: x => x.pet_breed_id,
-                        principalTable: "breeds",
-                        principalColumn: "id");
-                    table.ForeignKey(
-                        name: "fk_pets_species_species_id",
-                        column: x => x.pet_species_id,
-                        principalTable: "species",
-                        principalColumn: "id");
-                    table.ForeignKey(
                         name: "fk_pets_volunteers_volunteer_id",
                         column: x => x.volunteer_id,
                         principalTable: "volunteers",
@@ -98,14 +92,9 @@ namespace PetFamily.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "ix_pets_breed_id",
-                table: "pets",
-                column: "pet_breed_id");
-
-            migrationBuilder.CreateIndex(
-                name: "ix_pets_species_id",
-                table: "pets",
-                column: "pet_species_id");
+                name: "ix_breeds_breed_id",
+                table: "breeds",
+                column: "breed_id");
 
             migrationBuilder.CreateIndex(
                 name: "ix_pets_volunteer_id",
@@ -117,10 +106,10 @@ namespace PetFamily.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "pets");
+                name: "breeds");
 
             migrationBuilder.DropTable(
-                name: "breeds");
+                name: "pets");
 
             migrationBuilder.DropTable(
                 name: "species");

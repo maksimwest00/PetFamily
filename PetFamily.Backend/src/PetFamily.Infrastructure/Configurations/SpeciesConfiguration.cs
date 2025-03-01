@@ -22,9 +22,9 @@ namespace PetFamily.Infrastructure.Configurations
                    .IsRequired()
                    .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
 
-            //builder.HasMany(v => v.Breeds)
-            //       .WithOne()
-            //       .HasForeignKey("breed_id");
+            builder.HasMany(v => v.Breeds)
+                   .WithOne()
+                   .HasForeignKey("breed_id");
         }
     }
 }

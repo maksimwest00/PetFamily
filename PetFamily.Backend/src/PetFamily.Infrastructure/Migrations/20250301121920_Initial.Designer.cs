@@ -13,7 +13,7 @@ using PetFamily.Infrastructure;
 namespace PetFamily.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250228130443_Initial")]
+    [Migration("20250301121920_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -37,10 +37,6 @@ namespace PetFamily.Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)")
                         .HasColumnName("address_locate_pet");
-
-                    b.Property<Guid?>("BreedId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("breed_id");
 
                     b.Property<string>("Color")
                         .IsRequired()
@@ -92,10 +88,6 @@ namespace PetFamily.Infrastructure.Migrations
                         .HasColumnType("character varying(100)")
                         .HasColumnName("number_phone");
 
-                    b.Property<Guid?>("SpeciesId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("species_id");
-
                     b.Property<int>("StatusHelp")
                         .HasColumnType("integer")
                         .HasColumnName("status_help");
@@ -124,23 +116,10 @@ namespace PetFamily.Infrastructure.Migrations
                     b.HasKey("Id")
                         .HasName("pk_pets");
 
-                    b.HasIndex("BreedId")
-                        .HasDatabaseName("ix_pets_breed_id");
-
-                    b.HasIndex("SpeciesId")
-                        .HasDatabaseName("ix_pets_species_id");
-
                     b.HasIndex("volunteer_id")
                         .HasDatabaseName("ix_pets_volunteer_id");
 
-                    b.ToTable("pets", null, t =>
-                        {
-                            t.Property("BreedId")
-                                .HasColumnName("pet_breed_id");
-
-                            t.Property("SpeciesId")
-                                .HasColumnName("pet_species_id");
-                        });
+                    b.ToTable("pets", (string)null);
                 });
 
             modelBuilder.Entity("PetFamily.Domain.Entities.Volunteer", b =>
@@ -195,8 +174,15 @@ namespace PetFamily.Infrastructure.Migrations
                         .HasColumnType("character varying(100)")
                         .HasColumnName("name");
 
+                    b.Property<Guid?>("breed_id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("breed_id");
+
                     b.HasKey("Id")
                         .HasName("pk_breeds");
+
+                    b.HasIndex("breed_id")
+                        .HasDatabaseName("ix_breeds_breed_id");
 
                     b.ToTable("breeds", (string)null);
                 });
@@ -221,16 +207,6 @@ namespace PetFamily.Infrastructure.Migrations
 
             modelBuilder.Entity("PetFamily.Domain.Entities.Pet", b =>
                 {
-                    b.HasOne("PetFamily.Domain.Species.Breed", "Breed")
-                        .WithMany()
-                        .HasForeignKey("BreedId")
-                        .HasConstraintName("fk_pets_breeds_breed_id");
-
-                    b.HasOne("PetFamily.Domain.Species.Species", "Species")
-                        .WithMany()
-                        .HasForeignKey("SpeciesId")
-                        .HasConstraintName("fk_pets_species_species_id");
-
                     b.HasOne("PetFamily.Domain.Entities.Volunteer", null)
                         .WithMany("Pets")
                         .HasForeignKey("volunteer_id")
@@ -289,11 +265,7 @@ namespace PetFamily.Infrastructure.Migrations
                             b1.Navigation("BankDetalis");
                         });
 
-                    b.Navigation("Breed");
-
                     b.Navigation("PetDetalis");
-
-                    b.Navigation("Species");
                 });
 
             modelBuilder.Entity("PetFamily.Domain.Entities.Volunteer", b =>
@@ -386,9 +358,22 @@ namespace PetFamily.Infrastructure.Migrations
                     b.Navigation("VolunteerDetalis");
                 });
 
+            modelBuilder.Entity("PetFamily.Domain.Species.Breed", b =>
+                {
+                    b.HasOne("PetFamily.Domain.Species.Species", null)
+                        .WithMany("Breeds")
+                        .HasForeignKey("breed_id")
+                        .HasConstraintName("fk_breeds_species_breed_id");
+                });
+
             modelBuilder.Entity("PetFamily.Domain.Entities.Volunteer", b =>
                 {
                     b.Navigation("Pets");
+                });
+
+            modelBuilder.Entity("PetFamily.Domain.Species.Species", b =>
+                {
+                    b.Navigation("Breeds");
                 });
 #pragma warning restore 612, 618
         }

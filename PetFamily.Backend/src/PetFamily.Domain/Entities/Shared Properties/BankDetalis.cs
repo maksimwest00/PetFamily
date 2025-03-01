@@ -1,8 +1,8 @@
-﻿using PetFamily.Domain.Shared;
+﻿using CSharpFunctionalExtensions;
 
 namespace PetFamily.Domain.Entities
 {
-    public record BankDetalis
+    public class BankDetalis : ComparableValueObject
     {
         // ef core
         private BankDetalis()
@@ -25,7 +25,7 @@ namespace PetFamily.Domain.Entities
         
         public string HowDoTransfer { get; } = default!;
 
-        public static Result<BankDetalis> Create(string name,
+        public static Shared.Result<BankDetalis> Create(string name,
                                                  string description,
                                                  string howDoTransfer)
         {
@@ -35,6 +35,13 @@ namespace PetFamily.Domain.Entities
             var bankDetalis = new BankDetalis(name, description, howDoTransfer);
 
             return (bankDetalis);
+        }
+
+        protected override IEnumerable<IComparable> GetComparableEqualityComponents()
+        {
+            yield return Name;
+            yield return Description;
+            yield return HowDoTransfer;
         }
     }
 }

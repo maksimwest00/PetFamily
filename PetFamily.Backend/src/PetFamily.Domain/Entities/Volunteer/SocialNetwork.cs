@@ -1,8 +1,8 @@
-﻿using PetFamily.Domain.Shared;
+﻿using CSharpFunctionalExtensions;
 
 namespace PetFamily.Domain.Entities
 {
-    public record class SocialNetwork
+    public class SocialNetwork : ComparableValueObject
     {
         // ef core
         private SocialNetwork()
@@ -20,7 +20,7 @@ namespace PetFamily.Domain.Entities
         
         public string Name { get; private set; } = default!;
 
-        public static Result<SocialNetwork> Create(string link, string name)
+        public static Shared.Result<SocialNetwork> Create(string link, string name)
         {
             if (string.IsNullOrWhiteSpace(link))
                 return ("link cannot be empty");
@@ -29,6 +29,12 @@ namespace PetFamily.Domain.Entities
 
             var socialNetwork = new SocialNetwork(link, name);
             return (socialNetwork);
+        }
+
+        protected override IEnumerable<IComparable> GetComparableEqualityComponents()
+        {
+            yield return Link;
+            yield return Name;
         }
     }
 }

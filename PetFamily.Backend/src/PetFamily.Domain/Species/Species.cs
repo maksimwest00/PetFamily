@@ -4,7 +4,7 @@ namespace PetFamily.Domain.Species
 {
     public class Species : Shared.Entity<SpeciesId>
     {
-        //private List<Breed> _breeds = [];
+        private List<Breed> _breeds = [];
 
         // ef core
         private Species(SpeciesId id) : base(id)
@@ -19,7 +19,7 @@ namespace PetFamily.Domain.Species
 
         public string Name { get; private set; }
 
-        //public IReadOnlyList<Breed> Breeds => _breeds;
+        public IReadOnlyList<Breed> Breeds => _breeds;
 
         public static Result<Species> Create(SpeciesId id,
                                              string name)

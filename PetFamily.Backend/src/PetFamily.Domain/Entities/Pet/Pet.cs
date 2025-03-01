@@ -1,5 +1,4 @@
 ﻿using PetFamily.Domain.Shared;
-using PetFamily.Domain.Species;
 
 namespace PetFamily.Domain.Entities
 {
@@ -27,11 +26,7 @@ namespace PetFamily.Domain.Entities
 
         public string Nickname { get; private set; } = default!;
 
-        public Species.Species? Species { get; private set; }
-
         public string Description { get; private set; } = default!;
-
-        public Breed? Breed { get; private set; }
 
         public string Color { get; private set; } = default!;
 
