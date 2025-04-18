@@ -1,4 +1,5 @@
-﻿using PetFamily.Domain.Shared;
+﻿using CSharpFunctionalExtensions;
+using PetFamily.Domain.Shared;
 
 namespace PetFamily.Domain.Entities
 {
@@ -67,16 +68,16 @@ namespace PetFamily.Domain.Entities
                                                string phoneNumber)
         {
             if (string.IsNullOrWhiteSpace(fullName))
-                return ("FullName cannot be empty");
+                return Result.Failure<Volunteer>("FullName cannot be empty");
 
             if (string.IsNullOrWhiteSpace(email))
-                return ("Email cannot be empty");
+                return Result.Failure<Volunteer>("Email cannot be empty");
 
             if (string.IsNullOrWhiteSpace(description))
-                return ("Description cannot be empty");
+                return Result.Failure<Volunteer>("Description cannot be empty");
 
             if (string.IsNullOrWhiteSpace(phoneNumber))
-                return ("PhoneNumber cannot be empty");
+                return Result.Failure<Volunteer>("PhoneNumber cannot be empty");
 
             var volunter = new Volunteer(id, fullName, email, description, phoneNumber);
 

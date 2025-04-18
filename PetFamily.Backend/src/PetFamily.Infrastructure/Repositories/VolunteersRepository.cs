@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using CSharpFunctionalExtensions;
+using Microsoft.EntityFrameworkCore;
 using PetFamily.Domain.Entities;
 using PetFamily.Domain.Shared;
 using System;
@@ -36,7 +37,7 @@ namespace PetFamily.Infrastructure.Repositories
 
             if (volunteer is null)
             {
-                return "Voluntee not found";
+                return Result.Failure<Volunteer>("Voluntee not found");
             }
 
             return volunteer;

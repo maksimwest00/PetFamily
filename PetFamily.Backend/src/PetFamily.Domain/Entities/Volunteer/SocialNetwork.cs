@@ -20,12 +20,12 @@ namespace PetFamily.Domain.Entities
         
         public string Name { get; private set; } = default!;
 
-        public static Shared.Result<SocialNetwork> Create(string link, string name)
+        public static Result<SocialNetwork> Create(string link, string name)
         {
             if (string.IsNullOrWhiteSpace(link))
-                return ("link cannot be empty");
+                return Result.Failure<SocialNetwork>("link cannot be empty");
             if (string.IsNullOrWhiteSpace(name))
-                return ("name cannot be empty");
+                return Result.Failure<SocialNetwork>("name cannot be empty");
 
             var socialNetwork = new SocialNetwork(link, name);
             return (socialNetwork);

@@ -25,12 +25,16 @@ namespace PetFamily.Domain.Entities
         
         public string HowDoTransfer { get; } = default!;
 
-        public static Shared.Result<BankDetalis> Create(string name,
+        public static Result<BankDetalis> Create(string name,
                                                  string description,
                                                  string howDoTransfer)
         {
-            // Какая-либо валидация name, description, howDoTransfer
-            // н-р в случае не успеха Result.Failure("error")
+            if (string.IsNullOrWhiteSpace(name))
+                return Result.Failure<BankDetalis>("name cannot be empty");
+            if (string.IsNullOrWhiteSpace(description))
+                return Result.Failure<BankDetalis>("description cannot be empty"); ;
+            if (string.IsNullOrWhiteSpace(howDoTransfer))
+                return Result.Failure<BankDetalis>("howDoTransfer cannot be empty"); ;
 
             var bankDetalis = new BankDetalis(name, description, howDoTransfer);
 
