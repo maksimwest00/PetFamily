@@ -1,27 +1,20 @@
 using Microsoft.AspNetCore.Mvc;
+using PetFamily.API.Extensions;
 using PetFamily.Application.Volunteers.CreateVolunteer;
-using PetFamily.Domain.Entities;
 
 namespace PetFamily.API.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class VolunteersController : ControllerBase
+    public class VolunteersController : ApplicationController
     {
-        [HttpPost("create")]
-        public IActionResult Create([FromBody] CreateVolunteerDto dto)
+        [HttpPost]
+        public async Task<ActionResult<Guid>> Create(
+            [FromServices] CreateVolunteerHandler handler,
+            [FromBody] CreateVolunteerRequest request,
+            CancellationToken cancellationToken)
         {
-            var volunteerCreateResult = Volunteer.Create(VolunteerId.NewVolunteerId(),
-                                                         dto.fullName,
-                                                         dto.email,
-                                                         dto.description,
-                                                         dto.phoneNumber);
+            var result = await handler.Handle(request, cancellationToken);
 
-            if (volunteerCreateResult.IsFailure)
-            {
-                return BadRequest(new CreateVolunteerDtoResponse(volunteerCreateResult.Error));
-            }
-            return Ok();
+            return result.ToResponse();
         }
     }
 }

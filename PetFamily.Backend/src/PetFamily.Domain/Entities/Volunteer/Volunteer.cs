@@ -61,25 +61,29 @@ namespace PetFamily.Domain.Entities
 
         public IReadOnlyList<Pet> Pets => _pets;
 
-        public static Result<Volunteer> Create(VolunteerId id,
+        public static Result<Volunteer, Error> Create(VolunteerId id,
                                                string fullName,
                                                string email,
                                                string description,
                                                string phoneNumber)
         {
             if (string.IsNullOrWhiteSpace(fullName))
-                return Result.Failure<Volunteer>("FullName cannot be empty");
+                return Errors.General.ValueIsInvalid("FullName");
 
             if (string.IsNullOrWhiteSpace(email))
-                return Result.Failure<Volunteer>("Email cannot be empty");
+                return Errors.General.ValueIsInvalid("Email");
 
             if (string.IsNullOrWhiteSpace(description))
-                return Result.Failure<Volunteer>("Description cannot be empty");
+                return Errors.General.ValueIsInvalid("Description");
 
             if (string.IsNullOrWhiteSpace(phoneNumber))
-                return Result.Failure<Volunteer>("PhoneNumber cannot be empty");
+                return Errors.General.ValueIsInvalid("PhoneNumber");
 
-            var volunter = new Volunteer(id, fullName, email, description, phoneNumber);
+            var volunter = new Volunteer(id,
+                                         fullName,
+                                         email,
+                                         description,
+                                         phoneNumber);
 
             return (volunter);
         }

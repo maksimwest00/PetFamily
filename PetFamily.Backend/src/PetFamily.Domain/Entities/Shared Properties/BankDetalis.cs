@@ -1,4 +1,5 @@
 ﻿using CSharpFunctionalExtensions;
+using PetFamily.Domain.Shared;
 
 namespace PetFamily.Domain.Entities
 {
@@ -25,18 +26,20 @@ namespace PetFamily.Domain.Entities
         
         public string HowDoTransfer { get; } = default!;
 
-        public static Result<BankDetalis> Create(string name,
+        public static Result<BankDetalis, Error> Create(string name,
                                                  string description,
                                                  string howDoTransfer)
         {
             if (string.IsNullOrWhiteSpace(name))
-                return Result.Failure<BankDetalis>("name cannot be empty");
+                return Errors.General.ValueIsInvalid("Name");
             if (string.IsNullOrWhiteSpace(description))
-                return Result.Failure<BankDetalis>("description cannot be empty"); ;
+                return Errors.General.ValueIsInvalid("Description");
             if (string.IsNullOrWhiteSpace(howDoTransfer))
-                return Result.Failure<BankDetalis>("howDoTransfer cannot be empty"); ;
+                return Errors.General.ValueIsInvalid("HowDoTransfer");
 
-            var bankDetalis = new BankDetalis(name, description, howDoTransfer);
+            var bankDetalis = new BankDetalis(name,
+                                              description,
+                                              howDoTransfer);
 
             return (bankDetalis);
         }
