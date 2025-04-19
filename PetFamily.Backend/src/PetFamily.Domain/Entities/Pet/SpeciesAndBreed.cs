@@ -21,13 +21,13 @@ namespace PetFamily.Domain.Entities
         public SpeciesId SpecieId { get; private set; }
         public BreedId BreedId { get; private set; }
         
-        public static Shared.Result<SpeciesAndBreed> Create(SpeciesId specieId, BreedId breedId)
+        public static Result<SpeciesAndBreed, Error> Create(SpeciesId specieId, BreedId breedId)
         {
             if (specieId is null)
-                return ("specieId cannot be empty");
+                return Errors.General.ValueIsInvalid("SpecieId");
             if (breedId is null)
-                return ("breedId cannot be empty");
-            
+                return Errors.General.ValueIsInvalid("BreedId");
+
             var speciesAndBreed = new SpeciesAndBreed(specieId, breedId);
 
             return (speciesAndBreed);

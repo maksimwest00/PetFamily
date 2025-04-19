@@ -1,4 +1,5 @@
-﻿using PetFamily.Domain.Shared;
+﻿using CSharpFunctionalExtensions;
+using PetFamily.Domain.Shared;
 
 namespace PetFamily.Domain.Species
 {
@@ -21,7 +22,7 @@ namespace PetFamily.Domain.Species
                                            string name)
         {
             if (string.IsNullOrWhiteSpace(name))
-                return ("name cannot be empty");
+                return Result.Failure<Breed>("name cannot be empty");
 
             var breed = new Breed(id, name);
             return (breed);

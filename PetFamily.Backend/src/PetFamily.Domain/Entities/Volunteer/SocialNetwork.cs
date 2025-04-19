@@ -1,4 +1,5 @@
 ﻿using CSharpFunctionalExtensions;
+using PetFamily.Domain.Shared;
 
 namespace PetFamily.Domain.Entities
 {
@@ -20,12 +21,12 @@ namespace PetFamily.Domain.Entities
         
         public string Name { get; private set; } = default!;
 
-        public static Shared.Result<SocialNetwork> Create(string link, string name)
+        public static Result<SocialNetwork, Error> Create(string link, string name)
         {
             if (string.IsNullOrWhiteSpace(link))
-                return ("link cannot be empty");
+                return Errors.General.ValueIsInvalid("Link");
             if (string.IsNullOrWhiteSpace(name))
-                return ("name cannot be empty");
+                return Errors.General.ValueIsInvalid("Name");
 
             var socialNetwork = new SocialNetwork(link, name);
             return (socialNetwork);
