@@ -19,7 +19,7 @@ namespace PetFamily.Application.Volunteers.CreateVolunteer
             CancellationToken cancellationToken = default)
         {
             var volunteer = await _volunteersRepository
-                .GetByName(request.FullName);
+                .GetByName(request.FullName, cancellationToken);
 
             if (volunteer.IsSuccess)
                 return Errors.Volunteer.AlreadyExist();

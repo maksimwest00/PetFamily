@@ -29,7 +29,8 @@ namespace PetFamily.Infrastructure.Repositories
         }
 
         public async Task<Result<Volunteer, Error>> GetById(
-            VolunteerId volunteerId)
+            VolunteerId volunteerId,
+            CancellationToken cancellationToken = default)
         {
             var volunteer = await _dbContext.Volunteers
                 .Include(x => x.Pets)
@@ -43,7 +44,9 @@ namespace PetFamily.Infrastructure.Repositories
             return volunteer;
         }
 
-        public async Task<Result<Volunteer, Error>> GetByName(string fullName)
+        public async Task<Result<Volunteer, Error>> GetByName(
+            string fullName,
+            CancellationToken cancellationToken = default)
         {
             var volunteer = await _dbContext.Volunteers
                 .Include(x => x.Pets)
