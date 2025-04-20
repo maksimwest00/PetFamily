@@ -1,4 +1,5 @@
-﻿using PetFamily.Domain.Shared;
+﻿using CSharpFunctionalExtensions;
+using PetFamily.Domain.Shared;
 
 namespace PetFamily.Domain.Entities
 {
@@ -54,7 +55,7 @@ namespace PetFamily.Domain.Entities
         
         public SpeciesAndBreed? SpeciesAndBreed { get; private set; }
         
-        public static Result<Pet> Create(PetId petId,
+        public static Result<Pet, Error> Create(PetId petId,
                                          string nickName,
                                          string description,
                                          string color,
@@ -62,7 +63,7 @@ namespace PetFamily.Domain.Entities
                                          string AddressLocatePet)
         {
             if (string.IsNullOrWhiteSpace(nickName))
-                return "Nickname cannot be empty";
+                return Errors.General.ValueIsInvalid("Nickname");
 
             var pet = new Pet(petId, nickName, description, color, infoAboutHealthPet, AddressLocatePet);
             return pet;

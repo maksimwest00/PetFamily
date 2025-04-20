@@ -1,4 +1,5 @@
 ﻿using CSharpFunctionalExtensions;
+using PetFamily.Domain.Shared;
 
 namespace PetFamily.Domain.Entities
 {
@@ -25,14 +26,20 @@ namespace PetFamily.Domain.Entities
         
         public string HowDoTransfer { get; } = default!;
 
-        public static Shared.Result<BankDetalis> Create(string name,
+        public static Result<BankDetalis, Error> Create(string name,
                                                  string description,
                                                  string howDoTransfer)
         {
-            // Какая-либо валидация name, description, howDoTransfer
-            // н-р в случае не успеха Result.Failure("error")
+            if (string.IsNullOrWhiteSpace(name))
+                return Errors.General.ValueIsInvalid("Name");
+            if (string.IsNullOrWhiteSpace(description))
+                return Errors.General.ValueIsInvalid("Description");
+            if (string.IsNullOrWhiteSpace(howDoTransfer))
+                return Errors.General.ValueIsInvalid("HowDoTransfer");
 
-            var bankDetalis = new BankDetalis(name, description, howDoTransfer);
+            var bankDetalis = new BankDetalis(name,
+                                              description,
+                                              howDoTransfer);
 
             return (bankDetalis);
         }
