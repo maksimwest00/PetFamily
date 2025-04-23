@@ -1,6 +1,6 @@
 ﻿namespace PetFamily.Domain.Entities
 {
-    public enum EStatusHelp
+    public enum StatusHelp
     {
         NeedHelp = 0,
         LookingHome = 1,

@@ -18,24 +18,44 @@ namespace PetFamily.Infrastructure.Configurations
                 id => id.Value,
                 value => VolunteerId.Create(value));
 
-            builder.Property(v => v.FullName)
-                .IsRequired()
-                .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
+            builder.ComplexProperty(v => v.FullName, vb =>
+            {
+                vb.Property(t => t.Value)
+                    .IsRequired()
+                    .HasMaxLength(FullName.MAX_LENGTH)
+                    .HasColumnName("full_name");
+            });
 
-            builder.Property(v => v.Email)
-                .IsRequired()
-                .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
+            builder.ComplexProperty(v => v.Email, vb =>
+            {
+                vb.Property(t => t.Value)
+                    .IsRequired()
+                    .HasMaxLength(Email.MAX_LENGTH)
+                    .HasColumnName("email");
+            });
 
-            builder.Property(v => v.Description)
-                .IsRequired()
-                .HasMaxLength(Constants.MAX_HIGH_TEXT_LENGTH);
+            builder.ComplexProperty(v => v.Description, vb =>
+            {
+                vb.Property(t => t.Value)
+                    .IsRequired()
+                    .HasMaxLength(Description.MAX_LENGTH)
+                    .HasColumnName("description");
+            });
 
-            builder.Property(v => v.ExperienceYear)
-                .IsRequired();
+            builder.ComplexProperty(v => v.ExperienceYear, vb =>
+            {
+                vb.Property(pr => pr.Value)
+                  .IsRequired()
+                  .HasColumnName("experience_year");
+            });
 
-            builder.Property(v => v.PhoneNumber)
-                .IsRequired()
-                .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
+            builder.ComplexProperty(v => v.PhoneNumber, vb =>
+            {
+                vb.Property(t => t.Value)
+                    .IsRequired()
+                    .HasMaxLength(PhoneNumber.MAX_LENGTH)
+                    .HasColumnName("phoneNumber");
+            });
 
             builder.OwnsOne(v => v.VolunteerDetalis, vd =>
             {

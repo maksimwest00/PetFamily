@@ -11,16 +11,16 @@ namespace PetFamily.Domain.Entities
         {
 
         }
-        
+
         private SpeciesAndBreed(SpeciesId specieId, BreedId breedId)
         {
             SpecieId = specieId;
             BreedId = breedId;
         }
 
-        public SpeciesId SpecieId { get; private set; }
-        public BreedId BreedId { get; private set; }
-        
+        public SpeciesId SpecieId { get; } = default!;
+        public BreedId BreedId { get; } = default!;
+
         public static Result<SpeciesAndBreed, Error> Create(SpeciesId specieId, BreedId breedId)
         {
             if (specieId is null)
@@ -30,14 +30,13 @@ namespace PetFamily.Domain.Entities
 
             var speciesAndBreed = new SpeciesAndBreed(specieId, breedId);
 
-            return (speciesAndBreed);
+            return speciesAndBreed;
         }
 
         protected override IEnumerable<IComparable> GetComparableEqualityComponents()
         {
             yield return SpecieId;
             yield return BreedId;
-
         }
     }
 }

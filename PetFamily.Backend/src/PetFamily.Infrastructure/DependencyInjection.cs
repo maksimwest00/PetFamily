@@ -10,7 +10,6 @@ namespace PetFamily.Infrastructure
             this IServiceCollection services)
         {
             services.AddScoped<ApplicationDbContext>();
-
             services.AddScoped<IVolunteersRepository, VolunteersRepository>();
 
             return services;

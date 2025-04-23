@@ -28,11 +28,11 @@ namespace PetFamily.Infrastructure.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
-                    full_name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    description = table.Column<string>(type: "character varying(2900)", maxLength: 2900, nullable: false),
                     email = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    description = table.Column<string>(type: "character varying(2000)", maxLength: 2000, nullable: false),
                     experience_year = table.Column<int>(type: "integer", nullable: false),
-                    phone_number = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    full_name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    phoneNumber = table.Column<string>(type: "character varying(2900)", maxLength: 2900, nullable: false),
                     volunteer_detalis = table.Column<string>(type: "jsonb", nullable: true)
                 },
                 constraints: table =>
@@ -63,22 +63,22 @@ namespace PetFamily.Infrastructure.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
-                    nickname = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    description = table.Column<string>(type: "character varying(2000)", maxLength: 2000, nullable: false),
-                    color = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    info_about_health_pet = table.Column<string>(type: "character varying(2000)", maxLength: 2000, nullable: false),
-                    address_locate_pet = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    weight = table.Column<int>(type: "integer", nullable: false),
-                    height = table.Column<int>(type: "integer", nullable: false),
-                    number_phone = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     is_costrate = table.Column<bool>(type: "boolean", nullable: false),
                     date_of_birth = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     is_vaccinated = table.Column<bool>(type: "boolean", nullable: false),
                     status_help = table.Column<int>(type: "integer", nullable: false),
                     date_create = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     volunteer_id = table.Column<Guid>(type: "uuid", nullable: true),
+                    address_locate_pet = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    color = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    description = table.Column<string>(type: "character varying(2900)", maxLength: 2900, nullable: false),
+                    height = table.Column<string>(type: "text", nullable: false),
+                    info_about_health_pet = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    nickname = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    phone_number = table.Column<string>(type: "character varying(2900)", maxLength: 2900, nullable: false),
                     breed_id = table.Column<Guid>(type: "uuid", nullable: false),
                     species_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    weight = table.Column<string>(type: "text", nullable: false),
                     pet_detalis = table.Column<string>(type: "jsonb", nullable: true)
                 },
                 constraints: table =>
