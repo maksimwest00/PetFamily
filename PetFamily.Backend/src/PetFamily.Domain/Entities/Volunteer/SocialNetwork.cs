@@ -17,9 +17,9 @@ namespace PetFamily.Domain.Entities
             Name = name;
         }
 
-        public string Link { get; private set; } = default!;
-        
-        public string Name { get; private set; } = default!;
+        public string Link { get; } = default!;
+
+        public string Name { get; } = default!;
 
         public static Result<SocialNetwork, Error> Create(string link, string name)
         {

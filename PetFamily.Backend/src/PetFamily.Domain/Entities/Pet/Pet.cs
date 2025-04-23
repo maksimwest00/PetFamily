@@ -12,34 +12,50 @@ namespace PetFamily.Domain.Entities
         }
 
         private Pet(PetId id,
-                    string nickName,
-                    string description,
-                    string color,
-                    string infoAboutHealthPet,
-                    string addressLocatePet) : base(id)
+                    Nickname nickName,
+                    Description description,
+                    Color color,
+                    InfoAboutHealthPet infoAboutHealthPet,
+                    AddressLocatePet addressLocatePet,
+                    Weight weight,
+                    Height height,
+                    PhoneNumber phoneNumber,
+                    bool isCostrate,
+                    DateTime dateOfBirth,
+                    bool isVaccinated,
+                    EStatusHelp statusHelp,
+                    DateTime dateCreate) : base(id)
         {
             Nickname = nickName;
             Description = description;
             Color = color;
             InfoAboutHealthPet = infoAboutHealthPet;
             AddressLocatePet = addressLocatePet;
+            Weight = weight;
+            Height = height;
+            PhoneNumber = phoneNumber;
+            IsCostrate = isCostrate;
+            DateOfBirth = dateOfBirth;
+            IsVaccinated = isVaccinated;
+            StatusHelp = statusHelp;
+            DateCreate = dateCreate;
         }
 
-        public string Nickname { get; private set; } = default!;
+        public Nickname Nickname { get; private set; } = default!;
 
-        public string Description { get; private set; } = default!;
+        public Description Description { get; private set; } = default!;
 
-        public string Color { get; private set; } = default!;
+        public Color Color { get; private set; } = default!;
 
-        public string InfoAboutHealthPet { get; private set; } = default!;
+        public InfoAboutHealthPet InfoAboutHealthPet { get; private set; } = default!;
 
-        public string AddressLocatePet { get; private set; } = default!;
+        public AddressLocatePet AddressLocatePet { get; private set; } = default!;
 
-        public int Weight { get; private set; }
+        public Weight Weight { get; private set; } = default!;
 
-        public int Height { get; private set; }
+        public Height Height { get; private set; } = default!;
 
-        public string NumberPhone { get; private set; } = default!;
+        public PhoneNumber PhoneNumber { get; private set; } = default!;
 
         public bool IsCostrate { get; private set; }
 
@@ -56,16 +72,35 @@ namespace PetFamily.Domain.Entities
         public SpeciesAndBreed? SpeciesAndBreed { get; private set; }
         
         public static Result<Pet, Error> Create(PetId petId,
-                                         string nickName,
-                                         string description,
-                                         string color,
-                                         string infoAboutHealthPet,
-                                         string AddressLocatePet)
+                                                Nickname nickName,
+                                                Description description,
+                                                Color color,
+                                                InfoAboutHealthPet infoAboutHealthPet,
+                                                AddressLocatePet AddressLocatePet,
+                                                Weight weight,
+                                                Height height,
+                                                PhoneNumber phoneNumber,
+                                                bool isCostrate,
+                                                DateTime dateOfBirth,
+                                                bool isVaccinated,
+                                                EStatusHelp statusHelp,
+                                                DateTime dateCreate)
         {
-            if (string.IsNullOrWhiteSpace(nickName))
-                return Errors.General.ValueIsInvalid("Nickname");
+            var pet = new Pet(petId,
+                              nickName,
+                              description,
+                              color,
+                              infoAboutHealthPet,
+                              AddressLocatePet,
+                              weight,
+                              height,
+                              phoneNumber,
+                              isCostrate,
+                              dateOfBirth,
+                              isVaccinated,
+                              statusHelp,
+                              dateCreate);
 
-            var pet = new Pet(petId, nickName, description, color, infoAboutHealthPet, AddressLocatePet);
             return pet;
         }
     }

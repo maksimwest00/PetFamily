@@ -37,9 +37,7 @@ namespace PetFamily.Infrastructure.Repositories
                 .FirstOrDefaultAsync(x => x.Id == volunteerId);
 
             if (volunteer is null)
-            {
                 return Errors.General.NotFound(volunteerId.Value);
-            }
 
             return volunteer;
         }
@@ -50,12 +48,10 @@ namespace PetFamily.Infrastructure.Repositories
         {
             var volunteer = await _dbContext.Volunteers
                 .Include(x => x.Pets)
-                .FirstOrDefaultAsync(x => x.FullName == fullName);
+                .FirstOrDefaultAsync(x => x.FullName.Value == fullName);
 
             if (volunteer is null)
-            {
                 return Errors.General.NotFound();
-            }
 
             return volunteer;
         }

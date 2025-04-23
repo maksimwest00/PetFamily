@@ -19,39 +19,67 @@ namespace PetFamily.Infrastructure.Configurations
                    id => id.Value,
                    value => PetId.Create(value));
 
-            builder.Property(v => v.Nickname)
-                   .IsRequired()
-                   .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
+            builder.ComplexProperty(p => p.Nickname, pb =>
+            {
+                pb.Property(pr => pr.Value)
+                  .IsRequired()
+                  .HasMaxLength(Nickname.MAX_LENGTH)
+                  .HasColumnName("nickname");
+            });
 
- 
-
-            builder.Property(v => v.Description)
-                   .IsRequired()
-                   .HasMaxLength(Constants.MAX_HIGH_TEXT_LENGTH);
-
-            //builder.HasOne(v => v.Breed);
-
-            builder.Property(v => v.Color)
-                   .IsRequired()
-                   .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
-
-            builder.Property(v => v.InfoAboutHealthPet)
-                   .IsRequired()
-                   .HasMaxLength(Constants.MAX_HIGH_TEXT_LENGTH);
-
-            builder.Property(v => v.AddressLocatePet)
-                   .IsRequired()
-                   .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
-
-            builder.Property(v => v.Weight)
-                   .IsRequired();
-
-            builder.Property(v => v.Height)
-                   .IsRequired();
-
-            builder.Property(v => v.NumberPhone)
+            builder.ComplexProperty(p => p.Description, pb =>
+            {
+                pb.Property(pr => pr.Value)
                     .IsRequired()
-                    .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
+                    .HasMaxLength(Description.MAX_LENGTH)
+                    .HasColumnName("description");
+            });
+
+            builder.ComplexProperty(p => p.Color, pb =>
+            {
+                pb.Property(pr => pr.Value)
+                    .IsRequired()
+                    .HasMaxLength(Color.MAX_LENGTH)
+                    .HasColumnName("color");
+            });
+
+            builder.ComplexProperty(p => p.InfoAboutHealthPet, pb =>
+            {
+                pb.Property(pr => pr.Value)
+                    .IsRequired()
+                    .HasMaxLength(InfoAboutHealthPet.MAX_LENGTH)
+                    .HasColumnName("info_about_health_pet");
+            });
+
+            builder.ComplexProperty(p => p.AddressLocatePet, pb =>
+            {
+                pb.Property(pr => pr.Value)
+                  .IsRequired()
+                  .HasMaxLength(AddressLocatePet.MAX_LENGTH)
+                  .HasColumnName("address_locate_pet");
+            });
+
+            builder.ComplexProperty(p => p.Weight, pb =>
+            {
+                pb.Property(pr => pr.Value)
+                  .IsRequired()
+                  .HasColumnName("weight");
+            });
+
+            builder.ComplexProperty(p => p.Height, pb =>
+            {
+                pb.Property(pr => pr.Value)
+                  .IsRequired()
+                  .HasColumnName("height");
+            });
+
+            builder.ComplexProperty(p => p.PhoneNumber, pb =>
+            {
+                pb.Property(pr => pr.Value)
+                  .IsRequired()
+                  .HasMaxLength(PhoneNumber.MAX_LENGTH)
+                  .HasColumnName("phone_number");
+            });
 
             builder.Property(v => v.IsCostrate)
                    .IsRequired();
@@ -89,16 +117,6 @@ namespace PetFamily.Infrastructure.Configurations
 
             builder.Property(v => v.DateCreate)
                    .IsRequired();
-
-            //builder.Property(v => v.SpecieId)
-            //       .HasConversion(
-            //       id => id.Value,
-            //       value => SpecieId.Create(value));
-
-            //builder.Property(v => v.BreedId)
-            //       .HasConversion(
-            //       id => id.Value,
-            //       value => BreedId.Create(value));
 
             builder.ComplexProperty(p => p.SpeciesAndBreed, pb =>
             {
