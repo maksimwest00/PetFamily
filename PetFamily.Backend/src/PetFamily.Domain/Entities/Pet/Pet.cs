@@ -11,20 +11,19 @@ namespace PetFamily.Domain.Entities
 
         }
 
-        private Pet(PetId id,
-                    Nickname nickName,
-                    Description description,
-                    Color color,
-                    InfoAboutHealthPet infoAboutHealthPet,
-                    AddressLocatePet addressLocatePet,
-                    Weight weight,
-                    Height height,
-                    PhoneNumber phoneNumber,
-                    bool isCastrated,
-                    DateTime dateOfBirth,
-                    bool isVaccinated,
-                    StatusHelp statusHelp,
-                    DateTime dateCreate) : base(id)
+        public Pet(PetId id,
+                   Nickname nickName,
+                   Description description,
+                   Color color,
+                   InfoAboutHealthPet infoAboutHealthPet,
+                   AddressLocatePet addressLocatePet,
+                   Weight weight,
+                   Height height,
+                   PhoneNumber phoneNumber,
+                   bool isCastrated,
+                   DateOfBirth dateOfBirth,
+                   bool isVaccinated,
+                   StatusHelp statusHelp) : base(id)
         {
             Nickname = nickName;
             Description = description;
@@ -38,7 +37,7 @@ namespace PetFamily.Domain.Entities
             DateOfBirth = dateOfBirth;
             IsVaccinated = isVaccinated;
             StatusHelp = statusHelp;
-            DateCreate = dateCreate;
+            DateCreate = DateTime.Now;
         }
 
         public Nickname Nickname { get; private set; } = default!;
@@ -59,7 +58,7 @@ namespace PetFamily.Domain.Entities
 
         public bool IsCastrated { get; private set; }
 
-        public DateTime DateOfBirth { get; private set; }
+        public DateOfBirth DateOfBirth { get; private set; }
 
         public bool IsVaccinated { get; private set; }
 
@@ -71,37 +70,6 @@ namespace PetFamily.Domain.Entities
         
         public SpeciesAndBreed? SpeciesAndBreed { get; private set; }
         
-        public static Result<Pet, Error> Create(PetId petId,
-                                                Nickname nickName,
-                                                Description description,
-                                                Color color,
-                                                InfoAboutHealthPet infoAboutHealthPet,
-                                                AddressLocatePet AddressLocatePet,
-                                                Weight weight,
-                                                Height height,
-                                                PhoneNumber phoneNumber,
-                                                bool isCastrated,
-                                                DateTime dateOfBirth,
-                                                bool isVaccinated,
-                                                StatusHelp statusHelp,
-                                                DateTime dateCreate)
-        {
-            var pet = new Pet(petId,
-                              nickName,
-                              description,
-                              color,
-                              infoAboutHealthPet,
-                              AddressLocatePet,
-                              weight,
-                              height,
-                              phoneNumber,
-                              isCastrated,
-                              dateOfBirth,
-                              isVaccinated,
-                              statusHelp,
-                              dateCreate);
 
-            return pet;
-        }
     }
 }
