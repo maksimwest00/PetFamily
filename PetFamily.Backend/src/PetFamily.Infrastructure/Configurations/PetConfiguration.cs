@@ -81,7 +81,7 @@ namespace PetFamily.Infrastructure.Configurations
                   .HasColumnName("phone_number");
             });
 
-            builder.Property(v => v.IsCostrate)
+            builder.Property(v => v.IsCastrated)
                    .IsRequired();
 
             builder.Property(v => v.DateOfBirth)
@@ -93,7 +93,7 @@ namespace PetFamily.Infrastructure.Configurations
             builder.Property(v => v.StatusHelp)
                    .HasConversion(
                    sh => (int)sh,
-                   value => (EStatusHelp)value);
+                   value => (StatusHelp)value);
 
             builder.OwnsOne(v => v.PetDetalis, pd =>
             {

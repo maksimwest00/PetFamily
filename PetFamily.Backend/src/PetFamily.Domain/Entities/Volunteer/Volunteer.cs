@@ -37,17 +37,17 @@ namespace PetFamily.Domain.Entities
 
         public int CountAnimalsWhichCouldFindHome()
         {
-            return Pets.Where(x => x.StatusHelp == EStatusHelp.FoundHome).Count();
+            return Pets.Where(x => x.StatusHelp == StatusHelp.FoundHome).Count();
         }
 
         public int CountAnimalsWhichFindingHomeNow()
         {
-            return Pets.Where(x => x.StatusHelp == EStatusHelp.LookingHome).Count();
+            return Pets.Where(x => x.StatusHelp == StatusHelp.LookingHome).Count();
         }
 
         public int CountAnimalsWhichLocateOnTreatment()
         {
-            return Pets.Where(x => x.StatusHelp == EStatusHelp.NeedHelp).Count();
+            return Pets.Where(x => x.StatusHelp == StatusHelp.NeedHelp).Count();
         }
 
         public PhoneNumber PhoneNumber { get; private set; } = default!;

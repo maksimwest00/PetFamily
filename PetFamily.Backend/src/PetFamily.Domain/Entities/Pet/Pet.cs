@@ -20,10 +20,10 @@ namespace PetFamily.Domain.Entities
                     Weight weight,
                     Height height,
                     PhoneNumber phoneNumber,
-                    bool isCostrate,
+                    bool isCastrated,
                     DateTime dateOfBirth,
                     bool isVaccinated,
-                    EStatusHelp statusHelp,
+                    StatusHelp statusHelp,
                     DateTime dateCreate) : base(id)
         {
             Nickname = nickName;
@@ -34,7 +34,7 @@ namespace PetFamily.Domain.Entities
             Weight = weight;
             Height = height;
             PhoneNumber = phoneNumber;
-            IsCostrate = isCostrate;
+            IsCastrated = isCastrated;
             DateOfBirth = dateOfBirth;
             IsVaccinated = isVaccinated;
             StatusHelp = statusHelp;
@@ -57,13 +57,13 @@ namespace PetFamily.Domain.Entities
 
         public PhoneNumber PhoneNumber { get; private set; } = default!;
 
-        public bool IsCostrate { get; private set; }
+        public bool IsCastrated { get; private set; }
 
         public DateTime DateOfBirth { get; private set; }
 
         public bool IsVaccinated { get; private set; }
 
-        public EStatusHelp StatusHelp { get; private set; }
+        public StatusHelp StatusHelp { get; private set; }
 
         public PetDetalis? PetDetalis { get; private set; }
 
@@ -80,10 +80,10 @@ namespace PetFamily.Domain.Entities
                                                 Weight weight,
                                                 Height height,
                                                 PhoneNumber phoneNumber,
-                                                bool isCostrate,
+                                                bool isCastrated,
                                                 DateTime dateOfBirth,
                                                 bool isVaccinated,
-                                                EStatusHelp statusHelp,
+                                                StatusHelp statusHelp,
                                                 DateTime dateCreate)
         {
             var pet = new Pet(petId,
@@ -95,7 +95,7 @@ namespace PetFamily.Domain.Entities
                               weight,
                               height,
                               phoneNumber,
-                              isCostrate,
+                              isCastrated,
                               dateOfBirth,
                               isVaccinated,
                               statusHelp,
