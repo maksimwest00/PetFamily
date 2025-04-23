@@ -11,7 +11,7 @@ namespace PetFamily.API.Response
 
         private Envelope(
             object? result,
-            Error error)
+            Error? error)
         {
             Result = result;
             ErrorCode = error?.Code;
